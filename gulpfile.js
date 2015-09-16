@@ -4,47 +4,24 @@
 var gulp       = require('gulp');
 
 // include plug-ins
-var changed    = require('gulp-changed');
-var imagemin   = require('gulp-imagemin');
-var minifyHTML = require('gulp-minify-html');
-var jshint     = require('gulp-jshint');
-var concat     = require('gulp-concat');
-var stripDebug = require('gulp-strip-debug');
-var uglify     = require('gulp-uglify');
-var autoprefix = require('gulp-autoprefixer');
-var minifyCSS  = require('gulp-minify-css');
-var sass       = require('gulp-sass');
-var jade       = require('gulp-jade');
+var changed       = require('gulp-changed');
+var imagemin       = require('gulp-imagemin');
+var minifyHTML     = require('gulp-minify-html');
+var jshint         = require('gulp-jshint');
+var concat         = require('gulp-concat');
+var stripDebug     = require('gulp-strip-debug');
+var uglify         = require('gulp-uglify');
+var autoprefix     = require('gulp-autoprefixer');
+var minifyCSS      = require('gulp-minify-css');
+var sass           = require('gulp-sass');
+var jade           = require('gulp-jade');
 
 //src file
-var imgSrc     = './src/images/**/*';
-var sourcesjs  = [
-    // Component handler
-    './bower_components/material-design-lite/src/mdlComponentHandler.js',
-    // Polyfills/dependencies
-    './bower_components/material-design-lite/src/third_party/**/*.js',
-    // Base components
-    './bower_components/material-design-lite/src/button/button.js',
-    './bower_components/material-design-lite/src/checkbox/checkbox.js',
-    './bower_components/material-design-lite/src/icon-toggle/icon-toggle.js',
-    './bower_components/material-design-lite/src/menu/menu.js',
-    './bower_components/material-design-lite/src/progress/progress.js',
-    './bower_components/material-design-lite/src/radio/radio.js',
-    './bower_components/material-design-lite/src/slider/slider.js',
-    './bower_components/material-design-lite/src/spinner/spinner.js',
-    './bower_components/material-design-lite/src/switch/switch.js',
-    './bower_components/material-design-lite/src/tabs/tabs.js',
-    './bower_components/material-design-lite/src/textfield/textfield.js',
-    './bower_components/material-design-lite/src/tooltip/tooltip.js',
-    // Complex components (which reuse base components)
-    './bower_components/material-design-lite/src/layout/layout.js',
-    './bower_components/material-design-lite/src/data-table/data-table.js',
-    // And finally, the ripples
-    './bower_components/material-design-lite/src/ripple/ripple.js',
-    './src/scripts/*.js'
-];
+var imgSrc         = './src/images/**/*';
+var sourcesjs      =   './src/scripts/*.js';
 var htmlSrc        = './src/html/*.html';
 var srcjade        ='./src/jade/*.jade';
+var srcsass        ='./src/sass/styles.scss';
 
 //src target
 var csstarget      = './www/assets/styles/';
@@ -109,8 +86,9 @@ gulp.task('styles', function() {
 });
 
 //sass task
+
 gulp.task('sass', function() {
-    gulp.src('./src/sass/styles.sass')
+    gulp.src(srcsass)
         /*.pipe(sourcemaps.init())*/
         .pipe(sass({
             errLogToConsole: true
