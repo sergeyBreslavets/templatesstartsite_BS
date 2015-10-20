@@ -6,7 +6,9 @@
  sudo npm install gulp --save-dev
  bower update
  sudo npm update
-```
+ 
+``` 
+измени bower.json - name   avtor
 *Модули gulp
 ```
 gulp-changed
