@@ -19,15 +19,8 @@ var notify         = require("gulp-notify");
 //src file
 var imgSrc         = './src/images/**/*';
 var sourcesjs      =  [     
-                            'bower_components/modernizr/modernizr.js',
-                            'bower_components/jquery/src/jquery.js',
-                                'bower_components/jquery-ui/jquery-ui.js',
-                                 'bower_components/imagesloaded/imagesloaded.js', 
-                                // 'bower_components/video.js/src/js/video.js',
-                                 'bower_components/bigvideo/lib/bigvideo.js',
-
-                            //'bower_components/bootstrap-sass/assets/javascripts/bootstrap.min.js',
-                            //'bower_components/bootstrap-sass/assets/javascripts/bootstrap-sprockets.js',
+                           'bower_components/modernizr/modernizr.js',
+                           'bower_components/jquery/dist/jquery.js',
                             
                             'bower_components/bootstrap-sass/assets/javascripts/bootstrap/transition.js',
                             'bower_components/bootstrap-sass/assets/javascripts/bootstrap/alert.js',
@@ -42,9 +35,9 @@ var sourcesjs      =  [
                             'bower_components/bootstrap-sass/assets/javascripts/bootstrap/tab.js',
                             'bower_components/bootstrap-sass/assets/javascripts/bootstrap/affix.js',
                             
-                          
+                            'bower_components/waterwheelcarousel/js/jquery.waterwheelCarousel.js',
 
-                            './src/scripts/*.js'
+                           './src/scripts/*.js'
 
                             //'bower_components/OwlCarousel/owl-carousel/owl.carousel.js',
                             //'bower_components/magnific-popup/dist/jquery.magnific-popup.js',
@@ -76,7 +69,7 @@ var opensanstarget = './www/assets/fonts/open-sans/';
 var myriadprotarget = './www/assets/fonts/';
 var imgDstcss      ='./www/assets/styles/img';
 // tasks 
-
+  
  gulp.task('copymyriadpro', function() {
     gulp.src('./src/font/*/*')
         .pipe(gulp.dest(myriadprotarget));
@@ -92,7 +85,12 @@ gulp.task('copyfont', function() {
     gulp.src([ './bower_components/bootstrap-sass/assets/fonts/bootstrap/*', 
                './bower_components/components-font-awesome/fonts/*'
              ])
-        .pipe(gulp.dest(fontsTargetbs));
+        .pipe(gulp.dest(fontsTargetbs))
+         .pipe(notify({
+            title: 'fontIconBootstrap',
+            message: 'copy Complide'
+
+    }));
 
 });
 //jade task
@@ -136,6 +134,11 @@ gulp.task('htmlpage', function() {
     }));
 });
 // JS concat, strip debugging and minify
+
+
+
+
+
 gulp.task('scripts', function() {
    gulp.src(sourcesjs)
         .pipe(concat('script.js'))
@@ -149,6 +152,18 @@ gulp.task('scripts', function() {
     }));
 });
 
+gulp.task('debjs', function() {
+   gulp.src(sourcesjs)
+        .pipe(concat('script.js'))
+        .pipe(stripDebug())
+       // .pipe(uglify())
+
+    .pipe(gulp.dest(pathjstarget))
+    .pipe(notify({
+            title: 'scripts',
+            message: 'scripts-complete the work!'
+    }));
+});
 // CSS concat, auto-prefix and minify
 gulp.task('styles', function() {
     gulp.src(['./src/styles/*.css'])
@@ -162,13 +177,15 @@ gulp.task('styles', function() {
     }));
 });
 
-//sass task
-
-
-
+//sass task ---  !!!  если не выполняеться то стоит еше раз сохранить файл и она отрабывает 
 
 gulp.task('sass', function () {
-  gulp.src(srcsass)
+   
+  gulp.src(srcsass) 
+  .pipe(notify({
+            title: 'sass',
+            message: 'start!'
+    }))
     .pipe(sass().on('error', sass.logError))
     .pipe(gulp.dest(sasstarget))
     .pipe(notify({
@@ -178,10 +195,27 @@ gulp.task('sass', function () {
     }));
 });
 
+gulp.task('whtml', function() {
+    // watch for HTML changes
+   gulp.watch('./src/html/*.html', function() {
+    gulp.run('htmlpage');
+    });
+});
 
+/// проблема тут !!!!!!!
+gulp.task('imagemincss', function() {
+    gulp.src(imgSrccss)
+        .pipe(changed(imgDstcss))
+        .pipe(imagemin())
+        .pipe(gulp.dest(imgDstcss))
+        .pipe(notify({
+            title: 'imagemincss',
+            message: 'imagemincss-complete the work!'
+    }));
+});
 
 // default gulp task
-gulp.task('watch', ['imagemin', 'htmlpage',  'scripts', 'styles', 'sass', 'imagemincss' /*'jade'*/], function() {
+gulp.task('watch', ['imagemin', 'sass', 'htmlpage',  'scripts', /*'styles',  'imagemincss' /*'jade'*/], function() {
     // watch for HTML changes
    gulp.watch('./src/html/*.html', function() {
     gulp.run('htmlpage');
@@ -193,9 +227,9 @@ gulp.task('watch', ['imagemin', 'htmlpage',  'scripts', 'styles', 'sass', 'image
     });
 
     // watch for CSS changes
-    gulp.watch('./src/styles/*.css', function() {
-        gulp.run('styles');
-    });
+    // gulp.watch('./src/styles/*.css', function() {
+    //     gulp.run('styles');
+    // });
     gulp.watch('./src/sass/{,*/}*.{scss,sass}', function() {
         gulp.run('sass');
     });
@@ -203,9 +237,9 @@ gulp.task('watch', ['imagemin', 'htmlpage',  'scripts', 'styles', 'sass', 'image
         gulp.run('imagemin');
     });
 
-     gulp.watch('./src/img/*', function() {
-        gulp.run('imagemincss');
-    });
+    //  gulp.watch('./src/img/*', function() {
+    //     gulp.run('imagemincss');
+    // });
   
 
   // gulp.task('./src/jade/**/*', function(){
@@ -214,34 +248,18 @@ gulp.task('watch', ['imagemin', 'htmlpage',  'scripts', 'styles', 'sass', 'image
 
 
 });
-
+/// gulp default
 gulp.task('default', function() {
  
         gulp.run('htmlpage');
         gulp.run('jshint', 'scripts');
         gulp.run('styles');
         gulp.run('sass');
-        gulp.run('imagemin');
-        gulp.run('imagemincss'); 
+        gulp.run('imagemin'); 
+        gulp.run('copyfont');
+       // gulp.run('imagemincss'); 
     
 });
 
 
-gulp.task('whtml', function() {
-    // watch for HTML changes
-   gulp.watch('./src/html/*.html', function() {
-    gulp.run('htmlpage');
-    });
-});
 
-
-gulp.task('imagemincss', function() {
-    gulp.src(imgSrccss)
-        .pipe(changed(imgDstcss))
-        .pipe(imagemin())
-        .pipe(gulp.dest(imgDstcss))
-        .pipe(notify({
-            title: 'imagemincss',
-            message: 'imagemincss-complete the work!'
-    }));
-});
