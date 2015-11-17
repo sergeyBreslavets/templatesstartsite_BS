@@ -9,7 +9,8 @@
  
 ``` 
 измени bower.json - name   avtor
-*Модули gulp
+
+Модули gulp
 ```
 gulp-changed
 gulp-imagemin
@@ -24,7 +25,8 @@ gulp-sass
 gulp-jade
 gulp-notify
 ```
-*my tasks in gulp
+
+my tasks in gulp
 ```
 gulp - по умолчанию 
 gulp watch -- watch
@@ -44,8 +46,10 @@ gulp imagemincss
 
 
 ```
-*Проблемы!!!
+
+Проблемы!!!
 ```
 imagemincss   в watch иногда не работае 
+если sass дает ошибку нет искомого файла заново сохранить !!
 
 ```
