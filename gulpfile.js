@@ -152,18 +152,18 @@ gulp.task('scripts', function() {
     }));
 });
 
-gulp.task('debjs', function() {
-   gulp.src(sourcesjs)
-        .pipe(concat('script.js'))
-        .pipe(stripDebug())
-       // .pipe(uglify())
+// gulp.task('debjs', function() {
+//   gulp.src(sourcesjs)
+//         .pipe(concat('script.js'))
+//         .pipe(stripDebug())
+//       // .pipe(uglify())
 
-    .pipe(gulp.dest(pathjstarget))
-    .pipe(notify({
-            title: 'scripts',
-            message: 'scripts-complete the work!'
-    }));
-});
+//     .pipe(gulp.dest(pathjstarget))
+//     .pipe(notify({
+//             title: 'scripts',
+//             message: 'scripts-complete the work!'
+//     }));
+// });
 // CSS concat, auto-prefix and minify
 gulp.task('styles', function() {
     gulp.src(['./src/styles/*.css'])
