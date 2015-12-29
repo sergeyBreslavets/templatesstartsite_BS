@@ -13,6 +13,7 @@
  bower update
  sudo npm update
  измени bower.json - name   avtor
+```
 
 * Модули gulp
 ```
@@ -30,7 +31,7 @@ gulp-jade
 gulp-notify
 ```
 
-my tasks in gulp
+* my tasks in gulp
 ```
 gulp - по умолчанию 
 gulp watch -- watch
@@ -47,8 +48,6 @@ gulp scripts
 gulp styles
 gulp sass
 gulp imagemincss  
-
-
 ```
 
 * Проблемы!!!
