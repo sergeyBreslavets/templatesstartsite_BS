@@ -6,17 +6,15 @@
 * Установка
 
 ```
-для работы поставить NODE  https://nodejs.org/en/
-проверить node -v
-```
+ для работы поставить NODE  https://nodejs.org/en/
+ проверить node -v
+ выполнить команды возможно sudo не надо в некоторых случаях 
  sudo npm install gulp --save-dev
  bower update
  sudo npm update
- 
-``` 
-измени bower.json - name   avtor
+ измени bower.json - name   avtor
 
-Модули gulp
+* Модули gulp
 ```
 gulp-changed
 gulp-imagemin
